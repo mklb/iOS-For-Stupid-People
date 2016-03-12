@@ -77,7 +77,7 @@ Why? Because I don´t want to waste time anymore solving the same damn problems 
 }
 ```
 
-### Always clean up!
+### Good to know
 We *always* use reusable cells in table/collection views! So clean up everything you added to the cell after init to prevent weird stuff!
 
 ```objective-c
@@ -86,4 +86,69 @@ We *always* use reusable cells in table/collection views! So clean up everything
   // [self.image removeFromSuperview];
   // self.image = nil;
 }
+```
+
+Other nice stuff:
+```objective-c
+// tableViewController.m
+// define the reuse identifier above the @interface
+static NSString * const reuseIdentifier = @"CellClassName";
+// hide cell separator
+self.tableView.separatorColor = [UIColor clearColor];
+// hide scrollbar
+[self.tableView setShowsVerticalScrollIndicator:NO];
+
+// cell.m
+// prevent cell from selection highlighting
+self.selectionStyle = UITableViewCellSelectionStyleNone;
+```
+
+##Images
+```objective-c
+// load an image from the asset catalog
+UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AssetCatalogFileName"]];
+// make an image round
+image.layer.masksToBounds = true;
+image.layer.cornerRadius = image.frame.size.width/2;
+```
+
+##General
+```objective-c
+// Hide statusbar: put this in every view controller or edit your damn plist (Status bar is initially hidden: YES)!
+-(BOOL)prefersStatusBarHidden{
+    return YES;
+}
+// Style statusbar: put this in viewDidLoad and set UIViewControllerBasedStatusBarAppearance to YES
+[self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
+
+// or this in AppDelegate.m and set UIViewControllerBasedStatusBarAppearance to NO
+[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+```
+
+## UINavigationBar
+## Transparent
+```objective-c
+// For tableviews/collectionviews: correct the top inset if you want
+[self setAutomaticallyAdjustsScrollViewInsets:false];
+self.extendedLayoutIncludesOpaqueBars = true;
+
+// style the navigation bar transparent
+// style for the whole app use: UINavigationBar *navigationBar = [UINavigationBar appearance];
+[self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                              forBarMetrics:UIBarMetricsDefault];
+self.navigationController.navigationBar.shadowImage = [UIImage new];
+self.navigationController.navigationBar.translucent = YES;
+self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+```
+
+## Navigation bar with a logo (image)
+```objective-c
+// viewDidLoad method
+// Your logo will resize perfectly, just edit YOUR_IMG_WIDTH_HERE
+UIView *titleView =[[UIView alloc] initWithFrame:CGRectMake(0, 0, YOUR_IMG_WIDTH_HERE, 40)];
+UIImageView *titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
+titleImageView.frame = CGRectMake(0, 0,titleView.frame.size.width , titleView.frame.size.height);
+[titleView addSubview:titleImageView];
+titleImageView.contentMode = UIViewContentModeScaleAspectFit;
+self.navigationItem.titleView = titleView;
 ```
