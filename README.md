@@ -112,7 +112,7 @@ image.layer.masksToBounds = true;
 image.layer.cornerRadius = image.frame.size.width/2;
 ```
 
-##General
+##Status bar
 ```objective-c
 // Hide statusbar: put this in every view controller or edit your damn plist (Status bar is initially hidden: YES)!
 -(BOOL)prefersStatusBarHidden{
@@ -126,7 +126,7 @@ image.layer.cornerRadius = image.frame.size.width/2;
 ```
 
 ## UINavigationBar
-## Transparent
+## Transparent UINavigationBar
 ```objective-c
 // For tableviews/collectionviews: correct the top inset if you want
 [self setAutomaticallyAdjustsScrollViewInsets:false];
@@ -141,7 +141,7 @@ self.navigationController.navigationBar.translucent = YES;
 self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 ```
 
-## Navigation bar with a logo (image)
+## UINavigationBar with a logo (image)
 ```objective-c
 // viewDidLoad method
 // Your logo will resize perfectly, just edit YOUR_IMG_WIDTH_HERE
