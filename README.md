@@ -113,16 +113,29 @@ image.layer.cornerRadius = image.frame.size.width/2;
 ```
 
 ##Status bar
+
 ```objective-c
-// Hide statusbar: put this in every view controller or edit your damn plist (Status bar is initially hidden: YES)!
+// Hide statusbar: "Status bar is initially hidden" YES or
+// "View controller-based status bar appearance" YES and
+// put this in every view controller
 -(BOOL)prefersStatusBarHidden{
     return YES;
 }
-// Style statusbar: put this in viewDidLoad and set UIViewControllerBasedStatusBarAppearance to YES
-[self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
+// Note: If you just want to hide the status bar just in your launch screen: "Status bar is initially hidden" YES and call prefersStatusBarHidden with false in your controllers (which is the default, so you don´t need to call anything..)
 
-// or this in AppDelegate.m and set UIViewControllerBasedStatusBarAppearance to NO
+// Style statusbar
+
+//  "View controller-based status bar appearance" NO
+// AppDelegate.m
 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+// "View controller-based status bar appearance" YES 
+// in your first controlelr
+[self.navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
+// or in every controller
+- (UIStatusBarStyle)preferredStatusBarStyle
+{ 
+    return UIStatusBarStyleLightContent; 
+}
 ```
 
 ## UINavigationBar
@@ -151,4 +164,17 @@ titleImageView.frame = CGRectMake(0, 0,titleView.frame.size.width , titleView.fr
 [titleView addSubview:titleImageView];
 titleImageView.contentMode = UIViewContentModeScaleAspectFit;
 self.navigationItem.titleView = titleView;
+```
+
+## Effects
+### iPhone movement caused effects with the Gyroscope
+```objective-c
+// motion effect x axis
+UIInterpolatingMotionEffect *motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+// or motion effect y axis
+UIInterpolatingMotionEffect *motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+// min and max values
+motionEffect.minimumRelativeValue = @(-YOUR_VALUE);
+motionEffect.maximumRelativeValue = @(YOUR_VALUE);
+[self.YOUR_VIEW addMotionEffect:motionEffect];
 ```
